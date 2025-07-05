@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Viewbox is set to 32x32 for better favicon optimization -->
+  
+  <!-- Simplified hexagon spiral pattern for better visibility at small sizes -->
+  
+  <!-- Center hexagon -->
+  <path d="M16 16 L19 13 L16 10 L13 13 L16 16" fill="#0088CC" opacity="1"/>
+  
+  <!-- First ring (simplified to 3 hexagons for clarity) -->
+  <path d="M21 15 L24 12 L21 9 L18 12 L21 15" fill="#0088CC" opacity="1"/>
+  <path d="M15 21 L18 18 L15 15 L12 18 L15 21" fill="#0088CC" opacity="1"/>
+  <path d="M10 15 L13 12 L10 9 L7 12 L10 15" fill="#0088CC" opacity="1"/>
+  
+  <!-- Second ring (dots instead of hexagons for simplicity) -->
+  <circle cx="24" cy="18" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="21" cy="23" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="15" cy="25" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="10" cy="23" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="7" cy="18" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="6" cy="12" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="10" cy="7" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="16" cy="5" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="21" cy="7" r="1.8" fill="#0088CC" opacity="1"/>
+  <circle cx="25" cy="12" r="1.8" fill="#0088CC" opacity="1"/>
+  
+  <!-- Outer dots (smaller and fewer for better scaling) -->
+  <circle cx="26" cy="21" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="22" cy="26" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="15" cy="28" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="9" cy="26" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="4" cy="21" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="3" cy="14" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="4" cy="8" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="9" cy="4" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="15" cy="3" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="22" cy="4" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="27" cy="8" r="1.2" fill="#0088CC" opacity="1"/>
+  <circle cx="28" cy="14" r="1.2" fill="#0088CC" opacity="1"/>
+</svg>

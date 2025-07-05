@@ -1,0 +1,81 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "ChainLess Doc",
+  "colors": {
+    "primary": "#4593ff",
+    "light": "#4593ff",
+    "dark": "#4593ff"
+  },
+  "favicon": "/favicon.ico",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "test/Overview/PlatformIntroduction",
+              "test/Overview/QuickStart"
+            ]
+          },
+          {
+            "group": "Development & Integration",
+            "icon":"code",
+            "pages": [
+              "test/DevelopmentIntegration/FrameworkBasics",
+              "test/DevelopmentIntegration/UIComponents",
+              "test/DevelopmentIntegration/DataStorage",
+              "test/DevelopmentIntegration/ChainlessWalletAPI",
+              "test/DevelopmentIntegration/SmartContractIntegration",
+              "test/DevelopmentIntegration/PaymentsandTransactions"
+            ]
+          },
+          {
+            "group": "Security & Deployment",
+            "pages": [
+              "test/SecurityDeployment/SecurityGuidelines",
+              "test/SecurityDeployment/PerformanceOptimization",
+              "test/SecurityDeployment/TestingandDebugging",
+              "test/SecurityDeployment/ApplicationPublishing"
+            ]
+          },
+          {
+            "group": "Operations & Support",
+            "pages": [
+              "test/OperationsSupport/DataAnalytics",
+              "test/OperationsSupport/BestPractices",
+              "test/OperationsSupport/APIReference",
+              "test/OperationsSupport/ResourcesandSupport"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:Support@chainless.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Official Website",
+      "href": "https://www.chainless.com"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/chainless",
+      "github": "https://github.com/chainless",
+      "linkedin": "https://linkedin.com/company/chainless"
+    }
+  }
+}
