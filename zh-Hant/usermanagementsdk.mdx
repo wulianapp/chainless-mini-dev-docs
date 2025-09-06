@@ -1,0 +1,198 @@
+---
+title: 用戶管理
+description: ""
+icon: "users"
+---
+
+# wallet.requestAuth()
+授權使用者資訊權限
+
+#### 範例程式碼
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const authorizationMethod = async () => {
+    let getUserInfo = await noChainProvider.current.requestAuth({
+        type: 'auth_account',
+        scope: 'userInfo',
+    })
+    console.log('result', getUserInfo)
+}
+```
+
+#### 參數  
+permissions Array - 權限陣列，包含以下屬性:  
+- type string - 權限類型  
+- scope string 可選 - 權限範圍  
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 授權是否成功  
+- accountId string - 帳戶ID  
+- data Array - 獲得的授權資訊:(如果有)  
+  type: string - 權限類型  
+  scope: string - 權限範圍  
+- error string 可選 - 錯誤訊息(如果有)
+
+
+
+# wallet.getAuthorizedApps()
+獲取當前使用者已授權的應用列表
+
+#### 範例程式碼
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const authorizationMethod = async () => {
+    let getAuthorizedApps = await noChainProvider.current.getAuthorizedApps();
+    console.log('result', getAuthorizedApps)
+}
+```
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 授權是否成功  
+- accountId string - 帳戶ID  
+- data Array - 獲得的授權資訊:(如果有)  
+  type: string - 權限類型  
+  scope: string - 權限範圍  
+- error string 可選 - 錯誤訊息(如果有)
+
+
+## wallet.getAccount()
+獲取當前登入的Chainless帳戶資訊
+
+#### 範例程式碼
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const authorizationMethod = async () => {
+    let getAccount = await noChainProvider.current.getAccount();
+    console.log('result', getAccount)
+}
+```
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 授權是否成功  
+- data object - 獲得的授權資訊:(如果有)  
+  accountId: string - 帳戶ID  
+  publicKey: string - 公鑰  
+  network: string - 網路類型  
+  balance: Object - 帳戶金額  
+    coin: string 幣種名稱  
+    total_balance: string 幣種總金額  
+    available_balance: string 幣種金額  
+- error string 可選 - 錯誤訊息(如果有)
+
+
+## wallet.getAccountBalance()
+獲取當前登入的Chainless帳戶餘額
+
+#### 範例程式碼
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const getAccountBalanceMethod = async () => {
+    // 获取用户账户余额
+    let opt1 = { 
+        contract_id:'USDT' || ''   // 这里的 contractId 是用户输入的合约ID、、 可为空表示获取全部
+    }
+
+    let getAccountBalance = await noChainProvider.current.getAccountBalance(opt1)
+
+    console.log('result', getAccountBalance)
+}
+```
+
+#### 參數  
+- object object - 參數物件，包含以下屬性:  
+  contract_id? string - 幣種名稱，無參數表示查詢全部
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 執行是否成功  
+- data object - 獲得的帳戶幣種資訊:(如果有)  
+  accountId: string - 帳戶ID  
+  list: Array - 幣種陣列  
+- error string 可選 - 錯誤訊息(如果有)

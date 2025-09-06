@@ -1,0 +1,228 @@
+---
+title: 功能介紹
+description: ""
+icon: "bars"
+---
+
+### chainless-api-demo
+
+Chainless API 示範專案，展示如何使用 chainless-api-ts 函式庫與 Chainless 網路互動。
+
+### API 參考
+
+- viewMethod(): 查詢用戶資訊
+
+- 更多功能將持續補充中
+
+### 網路配置
+
+- 預設使用測試網節點：https://rpc-testnet.chainlessdw20.com
+
+- 網路 ID：chainless
+
+### 環境變數配置
+
+請建立 .env 檔案，並設定以下變數：
+```javascript
+NETWORK_ID=chainless
+NODE_URL=https://rpc-testnet.chainlessdw20.com
+ACCOUNT_ID=your_account.testnet
+PRIVATE_KEY=ed25519:your_private_key
+```
+
+### Relayer 交易
+
+- sendRelayerWithoutNonce: 發送不帶 nonce 的 relayer 交易，使用環境變數中配置的帳戶資訊發送一筆 TDW20 代幣轉帳交易
+
+- sendRelayerWithNonce: 發送帶有 nonce 的 relayer 交易，自動獲取當前帳戶 nonce 並加 1 作為交易 nonce，發送一筆 TDW20 代幣轉帳交易
+
+### RPC 交易
+
+- ftTransfer: 發送 Ft 代幣轉帳交易
+
+- ftTransferMultiCreate: 發送 Ft 代幣轉帳交易並呼叫多簽合約方法
+
+- fcallRpcDeploy: 將合約部署至區塊鏈
+
+- fcallRpcWithoutNonce: 執行不帶 nonce 的交易呼叫，執行合約的 set_max_balance 方法，設置最大餘額為 1
+
+- fcallRpcWithNonce: 執行帶有 nonce 的交易呼叫，執行合約的 set_max_balance 方法，設置最大餘額為 3
+
+- fcallRpcTransferMt: 執行代幣轉帳交易，轉帳 100000000000000 顆 TDW20 代幣
+
+- fsendMultiMtTransferRpcCreate: 發送多重簽名代幣轉帳交易（創建訂單）
+
+- fsendMultiMtTransferRpcExecute: 執行多重簽名代幣轉帳交易
+
+### 查詢方法
+
+- viewContractMethod: 查詢合約方法
+
+- viewState: 查詢區塊鏈狀態
+
+- viewTransaction: 查詢交易狀態
+
+- viewTokens: 查詢多代幣餘額
+
+- viewNearToken: 查詢 NEAR 代幣餘額
+
+- checkNonce: 查詢帳戶的 nonce 值
+
+### 代幣餘額查詢方法
+
+（需要注意目前只有 MT 代幣可透過以下方式查詢，且只有 MT 代幣會在鏈上有價格。每次轉帳 MT 會從 from 餘額中收取 1/1000 作為手續費，具體可自由選擇手續費的幣種）
+（例如：交易哈希：LBB54frbGjUPsZf1JhUs5EVFH2YQGJXxh57jX3zRtKT。轉帳 MT）
+
+```javascript
+curl --location --request POST 'https://rpc-testnet.chainlessdw20.com' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"jsonrpc": "2.0",
+"id": "dontcare",
+"method": "EXPERIMENTAL_tx_status",
+"params": {
+"tx_hash": "LBB54frbGjUPsZf1JhUs5EVFH2YQGJXxh57jX3zRtKT",
+"sender_account_id": "sender.testnet",
+"wait_until": "EXECUTED"
+}
+}' | jq .
+```
+
+- getTokenBalance：查詢特定帳戶的特定代幣餘額
+
+- getTokenBalanceList：查詢特定帳戶的所有代幣餘額列表
+
+- getTokenPricesAndFees：查詢所有代幣的價格與轉帳手續費
+
+- estimateTransferFee：預估特定轉帳的手續費
+
+### 代幣餘額查詢範例
+#### 查詢特定帳戶的特定代幣餘額
+
+```javascript
+import { getTokenBalance } from './src/token-balance';
+
+async function example() {
+  const accountId = 'your_account_id';
+  const symbol = 'TDW20';
+  const balance = await getTokenBalance(accountId, symbol);
+  console.log(balance);
+}
+```
+返回格式：
+```javascript
+{
+  "block_hash": "448Rin3ZtczxiJ9DrjeH2w6CWmu3TCmhwxqAPMMPaGnM",
+  "block_height": 1694,
+  "symbol": "TDW20",
+  "amount": "100000000000000000000000000000000"
+}
+```
+
+#### 查詢特定帳戶的所有代幣餘額列表
+```javascript
+import { getTokenBalanceList } from './src/token-balance';
+
+async function example() {
+  const accountId = 'your_account_id';
+  const balanceList = await getTokenBalanceList(accountId);
+  console.log(balanceList);
+}
+```
+返回格式：
+```javascript
+{
+  "block_hash": "9frxu3gXvQhTnhL2irf6MfeWAsWyUEkhdi5NVW5kvi1m",
+  "block_height": 8,
+  "tokens": [
+    {
+      "symbol": "DW20",
+      "balance": "123456789"
+    },
+    {
+      "symbol": "TDW20",
+      "balance": "100000000000000000000000000000000"
+    }
+  ]
+}
+```
+
+#### 查詢所有代幣的價格與轉帳手續費
+```javascript
+import { getTokenPricesAndFees } from './src/token-balance';
+
+async function example() {
+  const pricesAndFees = await getTokenPricesAndFees();
+  console.log(pricesAndFees);
+}
+```
+返回格式：
+```javascript
+{
+  "tokens": [
+    {
+      "fee": {
+        "max": "20000000000000000000000000",
+        "ratio": { "numer": "1", "denom": "1000" }
+      },
+      "price": { "numer": "1", "denom": "1" },
+      "symbol": "TDW20"
+    }
+  ],
+  "block_hash": "EhmwtvDYT21nwWTpRCbHLTEavNsMpPhio5VU5BPUBasJ",
+  "block_height": 2302
+}
+```
+
+#### 預估特定轉帳的手續費
+```javascript
+import { estimateTransferFee } from './src/token-balance';
+
+async function example() {
+  const senderId = 'your_account_id';
+  const receiverId = 'receiver_account_id';
+  const symbol = 'TDW20';
+  const amount = '100000000000000';
+  const feeSymbols = ['TDW20'];
+  
+  const fees = await estimateTransferFee(
+    senderId,
+    receiverId,
+    symbol,
+    amount,
+    feeSymbols
+  );
+  
+  console.log(fees);
+}
+```
+返回格式：
+```javascript
+{
+  "block_hash": "BRb84Jv6nNCxnaR97Bt9qx52wTY1n1Ae6qaMN6JEuMVP",
+  "block_height": 137279,
+  "fees": [
+    "100000000000"
+  ]
+}
+```
+
+### 代幣餘額查詢注意事項
+
+- 所有代幣的 decimal 均為 24 位
+
+- symbol 區分大小寫
+
+- 查詢平台幣請使用 NEAR 原生接口
+
+- 在 dynamic_config 接口中，price.numer : price.denom 表示該代幣兌換 USDT 的價格
+
+- 在 transfer_fee 接口中，返回的 fees 陣列順序與請求時的 fee_symbol 參數順序一致
+
+#### 執行指令
+```javascript
+npm run run-tx             # 執行交易
+npm run run-view           # 查詢 view 方法
+npm run run-relayer        # 執行 relayer 交易
+npm run run-token-balance  # 查詢代幣餘額
+```

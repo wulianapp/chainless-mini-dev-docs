@@ -1,0 +1,78 @@
+---
+title: System Management
+description: ""
+icon: "line-height"
+---
+
+## wallet.getAppInfo()
+// Get current app information
+
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const getAppInfoMethod = async () => {
+    let getAppInfo = await noChainProvider.current.getAppInfo();
+    console.log('result', getAppInfo)
+}
+```
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean  
+- data object - Authorized information obtained (if any):  
+  appId: string - Application ID  
+  appName: string - Application name  
+  version: string - Version number  
+  language: string - Device language  
+  model: string - Device brand  
+  brand: string - Device model
+
+```javascript
+// Page navigation
+wallet.navigate(url)
+url: string
+```
+
+```javascript
+// Set local storage
+miniProgramApi.setStorage(key, value)
+key: string  
+value: string
+```
+
+```javascript
+// Get local storage
+wallet.getStorage(key)
+key: string
+```
+
+```javascript
+// Remove local storage
+wallet.removeStorageFn(key)
+key: string
+```
+
+```javascript
+// Clear all local storage
+wallet.clearStorage()
+```

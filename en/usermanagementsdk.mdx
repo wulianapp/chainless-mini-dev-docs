@@ -1,0 +1,198 @@
+---
+title: User Management
+description: ""
+icon: "users"
+---
+
+# wallet.requestAuth()
+Request user authorization information
+
+#### Example Code
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const authorizationMethod = async () => {
+    let getUserInfo = await noChainProvider.current.requestAuth({
+        type: 'auth_account',
+        scope: 'userInfo',
+    })
+    console.log('result', getUserInfo)
+}
+```
+
+
+#### Parameters  
+permissions Array - Array of permissions, containing the following properties:  
+- type string - Type of permission  
+- scope string (optional) - Scope of permission  
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the authorization was successful  
+- accountId string - Account ID  
+- data Array - Authorized information obtained (if any):  
+  type: string - Type of permission  
+  scope: string - Scope of permission  
+- error string (optional) - Error message (if any)
+
+
+# wallet.getAuthorizedApps()
+Get the list of applications authorized by the current user
+
+#### Example Code
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const authorizationMethod = async () => {
+    let getAuthorizedApps = await noChainProvider.current.getAuthorizedApps();
+    console.log('result', getAuthorizedApps)
+}
+```
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the authorization was successful  
+- accountId string - Account ID  
+- data Array - Authorized information obtained (if any):  
+  type: string - Permission type  
+  scope: string - Permission scope  
+- error string (optional) - Error message (if any)
+
+
+## wallet.getAccount()
+Get information of the currently logged-in Chainless account
+
+#### Example Code
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const authorizationMethod = async () => {
+    let getAccount = await noChainProvider.current.getAccount();
+    console.log('result', getAccount)
+}
+```
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the authorization was successful  
+- data object - Authorized information obtained (if any):  
+  accountId: string - Account ID  
+  publicKey: string - Public key  
+  network: string - Network type  
+  balance: Object - Account balance  
+    coin: string - Coin name  
+    total_balance: string - Total amount of the coin  
+    available_balance: string - Available amount of the coin  
+- error string (optional) - Error message (if any)
+
+
+## wallet.getAccountBalance()
+Get the balance of the currently logged-in Chainless account
+
+#### Example Code
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const getAccountBalanceMethod = async () => {
+    // 获取用户账户余额
+    let opt1 = { 
+        contract_id:'USDT' || ''   // 这里的 contractId 是用户输入的合约ID、、 可为空表示获取全部
+    }
+
+    let getAccountBalance = await noChainProvider.current.getAccountBalance(opt1)
+
+    console.log('result', getAccountBalance)
+}
+```
+
+#### Parameters  
+- object object - Parameter object containing the following property:  
+  contract_id? string - Coin name; if omitted, retrieves all balances
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the operation was successful  
+- data object - Account coin information obtained (if any):  
+  accountId: string - Account ID  
+  list: Array - List of coins  
+- error string (optional) - Error message (if any)

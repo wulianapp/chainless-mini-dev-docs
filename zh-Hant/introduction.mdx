@@ -1,6 +1,7 @@
 ---
-title: Introduction
-description: "Welcome to the YUXIN documentation"
+title: 小程序平台簡介
+description: "Chainless 小程序平台為開發者提供了一個強大的框架，能夠用來打造去中心化的小程序，實現與 Chainless 生態系統的無縫 Web3 整合。本文件為開發者提供了全面的指南，協助您高效地在該平台上構建、部署並管理自己的小程序。"
+icon: "layer-group"
 ---
 
 <img
@@ -14,58 +15,82 @@ description: "Welcome to the YUXIN documentation"
   alt="Hero Dark"
 />
 
-## Setting up
+## 注册和发布小程序
 
-The first step to world-class documentation is setting up your editing environments.
+作為第三方開發者，你可以訪問 Chainless 的官方開發者平臺，快速註冊成為開發者，並方便地創建和發布小程序。
+
+### 開發流程如下：  
+註冊 → 創建小程序 → 在小程序中創建版本並發布代碼 → 通過審核上線
 
 <CardGroup cols={2}>
   <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
+    title="快速註冊"
+    icon="address-card"
+    href="quickregistration"
   >
-    Get your docs set up locally for easy development
+    第三方開發者通過註冊，擁有Chainless的開發者賬號。這是參與Chainless開發的必備步驟。通過開發者賬號，可以登錄Chainless開發者平臺，創建小程序和發布版本。
   </Card>
   <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
+    title="創建小程序"
+    icon="layer-plus"
+    href="createminiprogram"
   >
-    Preview your changes before you push to make sure they're perfect
+    小程序是第三方開發者發布程序功能的主體。創建小程序，並得到平臺審核通過後，可以在小程序主體下發布不同版本的代碼，由Chainless平臺官方協助完成發布和上線。
   </Card>
 </CardGroup>
 
-## Make it yours
+## 小程序SDK
 
-Update your docs to your brand and add valuable content for the best user conversion.
+Chainless 小程序開發者調試工具為開發者提供了高效的調試體驗，讓您在開發過程中能夠輕松進行小程序調試與優化。該工具旨在簡化開發者的工作流程，提供快速的錯誤定位和性能分析，幫助開發者節省時間，提升開發效率。您還可以訪問 https://main.d39z2wwvc88hhi.amplifyapp.com/welcome 獲得更多幫助。
 
 <CardGroup cols={2}>
   <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
+    title="用戶管理"
+    icon="users"
+    href="usermanagementsdk"
   >
-    Customize your docs to your company's colors and brands
+    用戶模塊為WebView與App之間的數據同步提供支持。通過此模塊，網頁能夠實時訪問和更新App中的用戶數據，確保用戶在Web端和App端的操作保持一致，從而提升用戶體驗和數據一致性。
   </Card>
   <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
+    title="交易管理"
+    icon="retweet"
+    href="trademanagementsdk"
   >
-    Automatically generate endpoints from an OpenAPI spec
+    交易模塊支持WebView與App之間的實時數據交換。通過該模塊，網頁可管理和查詢App中的交易記錄，確保Web端的交易信息與App端的交易數據同步，提供無縫的交易體驗。
+  </Card>
+</CardGroup>
+
+## 无链區塊鏈API
+
+无链區塊鏈API是一個完整的函式庫，用於與无链區塊鏈進行互動。您可以在瀏覽器中使用它，或在 Node.js 執行環境中使用。
+
+<CardGroup cols={2}>
+  <Card
+    title="獲取MT余額"
+    icon="github"
+    href="exampleapi"
+  >
+    通過調用API獲取用戶的MT代幣余額
   </Card>
   <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
+    title="預估手續費"
+    icon="github"
+    href="exampleapi"
   >
-    Build interactive features and designs to guide your users
+    在交易發生前，預估本次交易所需要消耗的手續費。
   </Card>
   <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
+    title="通過relayer轉賬MT"
+    icon="github"
+    href="exampleapi"
   >
-    Check out our showcase of our favorite documentation
+    通過relayer完成在無鏈區塊鏈上轉賬MT代幣的操作
+  </Card>
+  <Card
+    title="通過relayer調合約"
+    icon="github"
+    href="exampleapi"
+  >
+    通過relayer賬號調用無鏈區塊鏈上的合約
   </Card>
 </CardGroup>

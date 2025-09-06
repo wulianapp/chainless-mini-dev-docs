@@ -1,0 +1,78 @@
+---
+title: 系統管理
+description: ""
+icon: "line-height"
+---
+
+## wallet.getAppInfo()
+// 獲取當前 APP 應用資訊
+
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const getAppInfoMethod = async () => {
+    let getAppInfo = await noChainProvider.current.getAppInfo();
+    console.log('result', getAppInfo)
+}
+```
+
+#### 返回值  
+返回一個 Promise，解析為包含以下屬性的物件:  
+- success boolean  
+- data object - 獲得的授權資訊:(如果有)  
+  appId: string - 應用 ID  
+  appName: string - 應用名稱  
+  version: string - 版本號  
+  language: string - 裝置語言  
+  model: string - 裝置品牌  
+  brand: string - 裝置型號
+
+```javascript
+// 頁面導航
+wallet.navigate(url)
+url: string
+```
+
+```javascript
+// 設定本地儲存
+miniProgramApi.setStorage(key, value)
+key: string  
+value: string
+```
+
+```javascript
+// 取得本地儲存
+wallet.getStorage(key)
+key: string
+```
+
+```javascript
+// 刪除本地儲存
+wallet.removeStorageFn(key)
+key: string
+```
+
+```javascript
+// 清除所有本地儲存
+wallet.clearStorage()
+```

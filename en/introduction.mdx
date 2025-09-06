@@ -1,6 +1,7 @@
 ---
 title: Introduction
-description: "Welcome to the YUXIN documentation"
+description: "The Chainless Mini-Program Platform provides developers with a robust framework to create decentralized mini-programs, enabling seamless Web3 integration within the Chainless ecosystem. This documentation serves as a comprehensive guide for developers to efficiently build, deploy, and manage their mini-programs within the platform."
+icon: "layer-group"
 ---
 
 <img
@@ -14,58 +15,82 @@ description: "Welcome to the YUXIN documentation"
   alt="Hero Dark"
 />
 
-## Setting up
+## Mini-Program SDK
 
-The first step to world-class documentation is setting up your editing environments.
+As a third-party developer, you can access the official Chainless Developer Platform to quickly register as a developer and easily create and publish mini-programs.
+
+### Development process:  
+Register → Create a mini-program → Create a version and publish code within the mini-program → Get approved and go live
 
 <CardGroup cols={2}>
   <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
+    title="Quick Registration"
+    icon="address-card"
+    href="quickregistration"
   >
-    Get your docs set up locally for easy development
+    By registering, third-party developers obtain a Chainless developer account, which is a necessary step to participate in Chainless development. With the developer account, they can log in to the Chainless Developer Platform to create mini-programs and publish versions.
   </Card>
   <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
+    title="Create Mini-Program"
+    icon="layer-plus"
+    href="createminiprogram"
   >
-    Preview your changes before you push to make sure they're perfect
+    A mini-program is the main entity through which third-party developers deliver their program functionalities. After creating a mini-program and passing the platform's review, developers can release different versions of the code under the mini-program entity. The Chainless platform will assist with the release and launch process.
   </Card>
 </CardGroup>
 
-## Make it yours
+## Mini-Program SDK
 
-Update your docs to your brand and add valuable content for the best user conversion.
+The Chainless Mini Program Developer Debugging Tool provides developers with an efficient debugging experience, enabling easy debugging and optimization of mini programs during the development process. This tool is designed to streamline the developer workflow by offering fast error tracking and performance analysis, helping developers save time and improve development efficiency. You can also visit https://main.d39z2wwvc88hhi.amplifyapp.com/welcome for more support.
 
 <CardGroup cols={2}>
   <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
+    title="User Management"
+    icon="users"
+    href="usermanagementsdk"
   >
-    Customize your docs to your company's colors and brands
+    User module provides support for data synchronization between WebView and App. Through this module, webpages can access and update user data in the App in real-time, ensuring consistency between user operations on the Web and App, thereby enhancing user experience and data consistency.
   </Card>
   <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
+    title="Transaction Management"
+    icon="retweet"
+    href="trademanagementsdk"
   >
-    Automatically generate endpoints from an OpenAPI spec
+    Transaction module supports real-time data exchange between WebView and App. Through this module, webpages can manage and query transaction records in the App, ensuring consistency between transaction information on the Web and App, providing a seamless transaction experience.
+  </Card>
+</CardGroup>
+
+## Chainless Blockchain API
+
+Chainless Blockchain API is a complete library to interact with the Chainless blockchain. You can use it in the browser, or in Node.js runtime.
+
+<CardGroup cols={2}>
+  <Card
+    title="Get MT Balance"
+    icon="github"
+    href="exampleapi"
+  >
+    Get user's MT token balance
   </Card>
   <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
+    title="Estimate Fee"
+    icon="github"
+    href="exampleapi"
   >
-    Build interactive features and designs to guide your users
+    Estimate the fee for a transaction
   </Card>
   <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
+    title="Transfer MT"
+    icon="github"
+    href="exampleapi"
   >
-    Check out our showcase of our favorite documentation
+    Transfer MT token through relayer
+  </Card>
+  <Card
+    title="Call Contract"
+    icon="github"
+    href="exampleapi"
+  >
+    Call smart contract on Chainless blockchain through relayer
   </Card>
 </CardGroup>

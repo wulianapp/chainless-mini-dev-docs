@@ -8,46 +8,72 @@
     "dark": "#4593ff"
   },
   "favicon": "/favicon.ico",
+  "customCSS": "/custom.css",
+  "appearance": {
+    "strict": true
+  },
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Guides",
+        "language": "zh-Hant",
         "groups": [
           {
-            "group": "Overview",
+            "group": "快速入門",
             "pages": [
-              "test/Overview/PlatformIntroduction",
-              "test/Overview/QuickStart"
+              "zh-Hant/introduction",
+              "zh-Hant/systemarchitecture",
+              "zh-Hant/quickregistration",
+              "zh-Hant/createminiprogram",
+              "zh-Hant/publishversion"
             ]
           },
           {
-            "group": "Development & Integration",
-            "icon":"code",
+            "group": "小程序SDK",
             "pages": [
-              "test/DevelopmentIntegration/FrameworkBasics",
-              "test/DevelopmentIntegration/UIComponents",
-              "test/DevelopmentIntegration/DataStorage",
-              "test/DevelopmentIntegration/ChainlessWalletAPI",
-              "test/DevelopmentIntegration/SmartContractIntegration",
-              "test/DevelopmentIntegration/PaymentsandTransactions"
+              "zh-Hant/quickinstallsdk",
+              "zh-Hant/usermanagementsdk",
+              "zh-Hant/trademanagementsdk",
+              "zh-Hant/systemmanagementsdk"
             ]
           },
           {
-            "group": "Security & Deployment",
+            "group": "无链區塊鏈API",
             "pages": [
-              "test/SecurityDeployment/SecurityGuidelines",
-              "test/SecurityDeployment/PerformanceOptimization",
-              "test/SecurityDeployment/TestingandDebugging",
-              "test/SecurityDeployment/ApplicationPublishing"
+              "zh-Hant/quickinstallapi",
+              "zh-Hant/introductionapi",
+              "zh-Hant/exampleapi"
+            ]
+          }
+        ]
+      },
+      {
+        "language": "en",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "en/introduction",
+              "en/systemarchitecture",
+              "en/quickregistration",
+              "en/createminiprogram",
+              "en/publishversion"
             ]
           },
           {
-            "group": "Operations & Support",
+            "group": "Mini-Program SDK",
             "pages": [
-              "test/OperationsSupport/DataAnalytics",
-              "test/OperationsSupport/BestPractices",
-              "test/OperationsSupport/APIReference",
-              "test/OperationsSupport/ResourcesandSupport"
+              "en/quickinstallsdk",
+              "en/usermanagementsdk",
+              "en/trademanagementsdk",
+              "en/systemmanagementsdk"
+            ]
+          },
+          {
+            "group": "Chainless Blockchain API",
+            "pages": [
+              "en/quickinstallapi",
+              "en/introductionapi",
+              "en/exampleapi"
             ]
           }
         ]
@@ -59,23 +85,18 @@
     "dark": "/logo/dark.png"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:Support@chainless.com"
-      }
-    ],
     "primary": {
       "type": "button",
       "label": "Official Website",
-      "href": "https://www.chainless.com"
+      "href": "https://www.chainless.hk"
     }
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/chainless",
-      "github": "https://github.com/chainless",
-      "linkedin": "https://linkedin.com/company/chainless"
+      "x": "https://twitter.com/ChainlessHK",
+      "github": "https://github.com/wulianapp",
+      "facebook": "https://www.facebook.com/profile.php?id=61551465200803",
+      "youtube": "https://www.youtube.com/channel/UCr5xz_0t_A9cVbmn4gpkiEA"
     }
   }
 }

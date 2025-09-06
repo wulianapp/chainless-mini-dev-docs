@@ -1,0 +1,38 @@
+---
+title: System Architecture
+description: ""
+icon: "sitemap"
+---
+
+
+<img 
+  src="/images/miniprogram/9e.png" 
+/>
+
+#### 1. User Access
+
+- Chainless wallet users access mini-programs via the Chainless Wallet App or embedded WebView.
+
+- The front-end of the mini-program communicates with: Official Chainless mini-program gateway \ Third-party mini-program backends \ Specific business logic endpoints (e.g., PUMP, SWAP, Investment modules)
+
+#### 2. Developer Registration & Review
+
+- Third-party developers must register for a Chainless developer account.
+
+- After development, the mini-program's front-end pages and smart contracts are submitted to the official GitHub review repository. This includes metadata like icons, tags, and entry points.
+
+#### 3. Mini-Program Structure & Deployment
+
+- Developers can create various mini-program types (PUMP, SWAP, Finance).
+
+- Each mini-program has: Its own API \ A self-hosted backend \ An independent database
+
+- Developers fully control their own infrastructure, providing complete flexibility and scalability.
+
+#### 4. Contract Deployment & Blockchain Interaction
+
+- Once the mini-program is ready, the developer: Publishes the front-end and deploys the smart contract.
+
+- End users interact via official APIs and SDKs, enabling: Identity authorization \ Secure linking \ Transaction execution
+
+- These actions are routed through: Official API \ Official data service \ Chainless Mainnet Blockchain for final transaction verification and storage.

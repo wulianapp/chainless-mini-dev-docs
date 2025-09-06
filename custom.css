@@ -1,0 +1,25 @@
+/* 隐藏搜索框 */
+[data-testid="search-bar"],
+.search-bar,
+.search-input,
+.search-container,
+input[placeholder*="Search"],
+input[placeholder*="搜索"],
+[class*="search"],
+[id*="search"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* 隐藏搜索相关的按钮和图标 */
+button[aria-label*="search"],
+button[aria-label*="Search"],
+.search-icon,
+[data-testid="search-trigger"] {
+  display: none !important;
+}
+
+/* 隐藏可能的搜索快捷键提示 */
+kbd {
+  display: none !important;
+}

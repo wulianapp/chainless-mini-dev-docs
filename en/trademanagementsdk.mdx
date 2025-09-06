@@ -1,0 +1,215 @@
+---
+title: Trade Management
+description: ""
+icon: "retweet"
+---
+
+## Contract Interaction
+
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const sendContractMethod = async () => {
+
+    let opt = {
+        receiverId: '',
+        sender_account_id: '',
+        actions: {
+            method_name: '',
+            args: {},
+            max_gas: 300000000000000,
+            amount: '',
+            symbol: '',
+            fee_symbol: '',
+        }
+    }
+    // 发送合约方法
+    let contractMethod = await noChainProvider.current.sendContractTxRaw(opt);
+    if (contractMethod.success && !contractMethod.error) {
+        // 广播txraw
+        let sendTxraw = await noChainProvider.current.sendBroadcastTx({
+            txRaw: contractMethod.data.txRaw
+        })
+        if (sendTxraw.success && sendTxraw.data.success) {
+            // 检测 hash 状态
+            let getHash = await noChainProvider.current.sendBroadcastHash({
+                hash: sendTxraw.data.hash
+            })
+            if (getHash.success && getHash.data.success) {
+                console.log('合约流程走完毕!') 
+            }
+        }
+    }
+}
+```
+
+## wallet.sendContractTxRaw() 
+// Send contract transaction
+
+#### Parameters  
+object - Parameter object containing the following properties:  
+- receiverId string - Receiver account  
+- sender_account_id string - Transaction user ID  
+- actions object  
+  method_name: string - Contract method to call  
+  args: object  
+  max_gas: object - Gas (default 300000000000000, optional)  
+  amount: string - Amount  
+  symbol: string - Token symbol  
+  fee_symbol: string - Fee token symbol  
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the transaction was successful  
+- data Array  
+  txRaw: string  
+- error string (optional) - Contract error message (if any)
+
+
+## wallet.sendBroadcastTx() 
+// Broadcast transaction
+
+#### Parameters  
+object - Parameter object containing the following properties:  
+- txRaw string 
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the transaction was successful  
+- data object  
+  success: boolean - Status  
+  hash: string - Hash  
+  msg?: string - Error message  
+- error string (optional) - Contract error message (if any)
+
+## wallet.sendBroadcastHash() 
+// Check transaction hash status - auto polling every 2 seconds (for up to 6 minutes), returns once result is available
+
+#### Parameters  
+object - Parameter object containing the following properties:  
+- hash string
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the transaction was successful  
+- data object  
+  success: boolean - Status  
+  msg?: string - Error message  
+- error string (optional) - Contract error message (if any)
+
+
+## Send Transfer
+
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const sendTransactionMethod = async () => {
+
+            const amount = '10000000000000000000000000'; // 10 NEAR in yoctoNEAR
+
+            let opt = { // 转帐
+                receiverId: '',// 非必填
+                sender_account_id: '',// 非必填
+                actions: {
+                    method_name: '',// 非必填
+                    args: {},// 非必填
+                    max_gas: 300000000000000,// 非必填
+                    amount: amount,// 必填
+                    symbol: 'TDW20',// 必填
+                    fee_symbol: 'TDW20',// 必填
+                },
+                recipient_account_id: values.userId,  // 接受者id 必填
+            }
+            let opt2 = { // 转帐
+                receiverId: 'multisig-send-mt.chainless', // 非必填
+                sender_account_id: '1002158048.user', // 非必填
+                actions: {
+                    method_name: 'create_order',  // 非必填
+                    args: {
+                        receiver: { account_id: '1002023190.user' },
+                        need_receiver_accept: false,
+                    },
+                    max_gas: 300000000000000, // 非必填
+                    amount: amount,   // 必填
+                    symbol: 'TDW20', // 必填
+                    fee_symbol: 'TDW20', // 必填
+                },
+                recipient_account_id: values.userId, // 接受者id 必填
+            }
+
+            // 拉起选择账号列表
+            let opt3 = { // 转帐
+                actions: {
+                    max_gas: 300000000000000,// 非必填
+                    amount: amount, // 必填
+                    symbol: 'TDW20', // 必填
+                    fee_symbol: 'TDW20',  // 必填
+                },
+                recipient_account_id: values.userId, // 接受者id 必填
+                open_account_list:true    // 打开账号返回。非必填
+            }
+
+          
+
+        let result = await noChainProvider.current.sendTransaction(opt2)
+    console.log('result', result)
+}
+```
+
+## wallet.sendTransaction()
+
+#### Parameters  
+object Array - Parameter object containing the following properties:  
+- to string - Recipient ID  
+-  value string - Amount  
+- token string - Transaction token  
+-  fee_token string - Fee token to be used  
+
+#### Return Value  
+Returns a Promise that resolves to an object with the following properties:  
+- success boolean - Whether the transaction was successful  
+- accountId string - Account ID  
+- data Array - Order information obtained (if any):  
+  orderId: string - Order ID  
+- error string (optional) - Error message (if any)
+

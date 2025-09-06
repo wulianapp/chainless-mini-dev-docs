@@ -1,0 +1,215 @@
+---
+title: 交易管理
+description: ""
+icon: "retweet"
+---
+
+## 合約互動
+
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const sendContractMethod = async () => {
+
+    let opt = {
+        receiverId: '',
+        sender_account_id: '',
+        actions: {
+            method_name: '',
+            args: {},
+            max_gas: 300000000000000,
+            amount: '',
+            symbol: '',
+            fee_symbol: '',
+        }
+    }
+    // 发送合约方法
+    let contractMethod = await noChainProvider.current.sendContractTxRaw(opt);
+    if (contractMethod.success && !contractMethod.error) {
+        // 广播txraw
+        let sendTxraw = await noChainProvider.current.sendBroadcastTx({
+            txRaw: contractMethod.data.txRaw
+        })
+        if (sendTxraw.success && sendTxraw.data.success) {
+            // 检测 hash 状态
+            let getHash = await noChainProvider.current.sendBroadcastHash({
+                hash: sendTxraw.data.hash
+            })
+            if (getHash.success && getHash.data.success) {
+                console.log('合约流程走完毕!') 
+            }
+        }
+    }
+}
+```
+
+#### wallet.sendContractTxRaw() 
+// 發送合約交易
+
+#### 參數  
+object - 參數物件，包含以下屬性:  
+- receiverId string - 接收者帳號  
+- sender_account_id string - 交易用戶ID  
+- actions object  
+  method_name: string - 合約調用方法  
+  args: object  
+  max_gas: object - gas（預設 300000000000000 可不傳）  
+  amount: string - 金額  
+  symbol: string - 幣種  
+  fee_symbol: string - 手續費幣種  
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 交易是否成功  
+- data Array
+  txRaw: string  
+- error string 可選 - 合約錯誤訊息（如果有）
+
+
+## wallet.sendBroadcastTx() 
+// 廣播交易
+
+#### 參數  
+object - 參數物件，包含以下屬性:  
+- txRaw string
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 交易是否成功  
+- data object  
+  success: boolean - 狀態  
+  hash: string - hash  
+  msg?: string - 錯誤訊息  
+- error string 可選 - 合約錯誤訊息（如果有）
+
+
+## wallet.sendBroadcastHash() 
+// 檢查交易hash狀態 - 每兩秒自動輪詢（查詢時間為6分鐘），有結果即返回
+
+#### 參數  
+object - 參數物件，包含以下屬性:  
+- hash string 
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 交易是否成功  
+- data object  
+  success: boolean - 狀態  
+  msg?: string - 錯誤訊息  
+- error string 可選 - 合約錯誤訊息（如果有）
+
+
+## 發起轉帳
+
+```javascript
+
+import * as miniProgramApi from 'mini-program-api'
+import React, { useEffect, useRef} from 'react';
+const noChainProvider: any = useRef()
+const __init = () => {
+    try {
+        if ((window as any).noChain) {
+            const provider = new miniProgramApi.BrowserProvider((window as any).noChain);
+            console.log('provider', provider)
+            noChainProvider.current = provider;
+        } else {
+            console.log('onChain对象未找到')
+        }
+    } catch (err) {
+        console.log('err', err)
+    }
+}
+
+useEffect(() => {
+    __init();
+}, [])
+
+const sendTransactionMethod = async () => {
+
+            const amount = '10000000000000000000000000'; // 10 NEAR in yoctoNEAR
+
+            let opt = { // 转帐
+                receiverId: '',// 非必填
+                sender_account_id: '',// 非必填
+                actions: {
+                    method_name: '',// 非必填
+                    args: {},// 非必填
+                    max_gas: 300000000000000,// 非必填
+                    amount: amount,// 必填
+                    symbol: 'TDW20',// 必填
+                    fee_symbol: 'TDW20',// 必填
+                },
+                recipient_account_id: values.userId,  // 接受者id 必填
+            }
+            let opt2 = { // 转帐
+                receiverId: 'multisig-send-mt.chainless', // 非必填
+                sender_account_id: '1002158048.user', // 非必填
+                actions: {
+                    method_name: 'create_order',  // 非必填
+                    args: {
+                        receiver: { account_id: '1002023190.user' },
+                        need_receiver_accept: false,
+                    },
+                    max_gas: 300000000000000, // 非必填
+                    amount: amount,   // 必填
+                    symbol: 'TDW20', // 必填
+                    fee_symbol: 'TDW20', // 必填
+                },
+                recipient_account_id: values.userId, // 接受者id 必填
+            }
+
+            // 拉起选择账号列表
+            let opt3 = { // 转帐
+                actions: {
+                    max_gas: 300000000000000,// 非必填
+                    amount: amount, // 必填
+                    symbol: 'TDW20', // 必填
+                    fee_symbol: 'TDW20',  // 必填
+                },
+                recipient_account_id: values.userId, // 接受者id 必填
+                open_account_list:true    // 打开账号返回。非必填
+            }
+
+          
+
+        let result = await noChainProvider.current.sendTransaction(opt2)
+    console.log('result', result)
+}
+```
+
+## wallet.sendTransaction()
+
+#### 參數  
+object Array - 參數物件，包含以下屬性:  
+ - to string - 接收方ID  
+ -  value string - 金額數  
+ -  token string - 交易token  
+ -  fee_token string - 指定手續費幣種  
+
+#### 返回值  
+返回一個Promise，解析為包含以下屬性的物件:  
+- success boolean - 交易是否成功  
+- accountId string - 帳戶ID  
+- data Array - 獲得的訂單資訊:(如果有)  
+  orderId: string - 訂單ID  
+- error string 可選 - 錯誤訊息（如果有）

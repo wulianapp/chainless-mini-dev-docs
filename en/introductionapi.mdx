@@ -1,0 +1,228 @@
+---
+title: Introduction
+description: ""
+icon: "bars"
+---
+
+### chainless-api-demo
+
+- The Chainless API demo project demonstrates how to use the chainless-api-ts library to interact with the Chainless network.
+
+### API Reference
+
+- viewMethod(): Query user information
+
+- More features will be added continuously
+
+### Network Configuration
+
+- Default testnet RPC endpoint: https://rpc-testnet.chainlessdw20.com
+
+- Network ID: chainless
+
+### Environment Variable Configuration
+
+Create a .env file and set the following variables:
+```javascript
+NETWORK_ID=chainless
+NODE_URL=https://rpc-testnet.chainlessdw20.com
+ACCOUNT_ID=your_account.testnet
+PRIVATE_KEY=ed25519:your_private_key
+```
+
+### Relayer Transactions
+
+- sendRelayerWithoutNonce: Sends a relayer transaction without a nonce. Uses the account configured in environment variables to send a TDW20 token transfer transaction.
+
+- sendRelayerWithNonce: Sends a relayer transaction with a nonce. Automatically retrieves the current account nonce and adds 1 as the transaction nonce to send a TDW20 token transfer transaction.
+
+### RPC Transactions
+
+- ftTransfer: Sends a fungible token transfer transaction.
+
+- ftTransferMultiCreate: Sends a fungible token transfer transaction and calls a multisig contract method.
+
+- fcallRpcDeploy: Deploys a contract to the blockchain.
+
+- fcallRpcWithoutNonce: Executes a contract method call without a nonce. Calls the set_max_balance method to set the maximum balance to 1.
+
+- fcallRpcWithNonce: Executes a contract method call with a nonce. Calls the set_max_balance method to set the maximum balance to 3.
+
+- fcallRpcTransferMt: Executes a token transfer transaction, transferring 100000000000000 TDW20 tokens.
+
+- fsendMultiMtTransferRpcCreate: Sends a multisig token transfer transaction (creates the order).
+
+- fsendMultiMtTransferRpcExecute: Executes a multisig token transfer transaction.
+
+### Query Methods
+
+- viewContractMethod: Query a contract method.
+
+- viewState: Query blockchain state.
+
+- viewTransaction: Query transaction status.
+
+- viewTokens: Query multiple token balances.
+
+- viewNearToken: Query NEAR token balance.
+
+- checkNonce: Query the nonce value of an account.
+
+### Token Balance Query Methods
+
+(Note: Currently, only MT tokens can be queried using the methods below, and only MT tokens have on-chain pricing. Each MT transfer deducts 1/1000 of the sender's balance as a fee. The token used for paying the fee can be freely selected.)
+(Example: Transaction hash LBB54frbGjUPsZf1JhUs5EVFH2YQGJXxh57jX3zRtKT, transferring MT)
+
+```javascript
+curl --location --request POST 'https://rpc-testnet.chainlessdw20.com' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"jsonrpc": "2.0",
+"id": "dontcare",
+"method": "EXPERIMENTAL_tx_status",
+"params": {
+"tx_hash": "LBB54frbGjUPsZf1JhUs5EVFH2YQGJXxh57jX3zRtKT",
+"sender_account_id": "sender.testnet",
+"wait_until": "EXECUTED"
+}
+}' | jq .
+```
+
+- getTokenBalance: Query the balance of a specific token in a specific account
+
+- getTokenBalanceList: Query all token balances of a specific account
+
+- getTokenPricesAndFees: Query all token prices and transfer fees
+
+- estimateTransferFee: Estimate the fee for a specific transfer
+
+### Token Balance Query Examples
+#### Query the Balance of a Specific Token in a Specific Account
+
+```javascript
+import { getTokenBalance } from './src/token-balance';
+
+async function example() {
+  const accountId = 'your_account_id';
+  const symbol = 'TDW20';
+  const balance = await getTokenBalance(accountId, symbol);
+  console.log(balance);
+}
+```
+Response format:
+```javascript
+{
+  "block_hash": "448Rin3ZtczxiJ9DrjeH2w6CWmu3TCmhwxqAPMMPaGnM",
+  "block_height": 1694,
+  "symbol": "TDW20",
+  "amount": "100000000000000000000000000000000"
+}
+```
+
+#### Query All Token Balances of a Specific Account
+```javascript
+import { getTokenBalanceList } from './src/token-balance';
+
+async function example() {
+  const accountId = 'your_account_id';
+  const balanceList = await getTokenBalanceList(accountId);
+  console.log(balanceList);
+}
+```
+Response format:
+```javascript
+{
+  "block_hash": "9frxu3gXvQhTnhL2irf6MfeWAsWyUEkhdi5NVW5kvi1m",
+  "block_height": 8,
+  "tokens": [
+    {
+      "symbol": "DW20",
+      "balance": "123456789"
+    },
+    {
+      "symbol": "TDW20",
+      "balance": "100000000000000000000000000000000"
+    }
+  ]
+}
+```
+
+#### Query All Token Prices and Transfer Fees
+```javascript
+import { getTokenPricesAndFees } from './src/token-balance';
+
+async function example() {
+  const pricesAndFees = await getTokenPricesAndFees();
+  console.log(pricesAndFees);
+}
+```
+Response format:
+```javascript
+{
+  "tokens": [
+    {
+      "fee": {
+        "max": "20000000000000000000000000",
+        "ratio": { "numer": "1", "denom": "1000" }
+      },
+      "price": { "numer": "1", "denom": "1" },
+      "symbol": "TDW20"
+    }
+  ],
+  "block_hash": "EhmwtvDYT21nwWTpRCbHLTEavNsMpPhio5VU5BPUBasJ",
+  "block_height": 2302
+}
+```
+
+#### Estimate the Transfer Fee for a Specific Transaction
+```javascript
+import { estimateTransferFee } from './src/token-balance';
+
+async function example() {
+  const senderId = 'your_account_id';
+  const receiverId = 'receiver_account_id';
+  const symbol = 'TDW20';
+  const amount = '100000000000000';
+  const feeSymbols = ['TDW20'];
+  
+  const fees = await estimateTransferFee(
+    senderId,
+    receiverId,
+    symbol,
+    amount,
+    feeSymbols
+  );
+  
+  console.log(fees);
+}
+```
+Response format:
+```javascript
+{
+  "block_hash": "BRb84Jv6nNCxnaR97Bt9qx52wTY1n1Ae6qaMN6JEuMVP",
+  "block_height": 137279,
+  "fees": [
+    "100000000000"
+  ]
+}
+```
+
+### Notes on Token Balance Queries
+
+- All tokens use 24-digit decimals
+
+- symbol is case-sensitive
+
+- To query platform tokens, use the native NEAR API
+
+- In the dynamic_config API, price.numer : price.denom represents the token's price in USDT
+
+- In the transfer_fee API, the returned fees array corresponds to the order of the fee_symbol parameters in the request
+
+#### Command Line Scripts
+```javascript
+npm run run-tx             # Execute transaction
+npm run run-view           # Call view methods
+npm run run-relayer        # Execute relayer transaction
+npm run run-token-balance  # Query token balances
+```
