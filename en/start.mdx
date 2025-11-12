@@ -62,7 +62,7 @@ graph TD
 
 ## Step-by-Step Implementation
 
-### 1) Initialize BrowserProvider
+### 1.Initialize BrowserProvider
 
 ```javascript
 import * as miniProgramApi from 'mini-program-api'
@@ -83,7 +83,7 @@ initProvider();
 - Returns: `BrowserProvider` instance
 - Errors: `E_PROVIDER_NOT_FOUND` when wallet is not available
 
-### 2) requestAuth: obtain authorization
+### 2.requestAuth: obtain authorization
 
 ```javascript
 const authResult = await provider.requestAuth({
@@ -103,7 +103,7 @@ const { accountId } = authResult;
 - Returns: `{ success, accountId, data?, error? }`
 - Errors: `E_AUTH_REJECTED` when user denies or fails authorization
 
-### 3) sendTransaction: select account
+### 3.sendTransaction: select account
 
 ```javascript
 // Open account list for selection by setting open_account_list: true
@@ -127,7 +127,7 @@ if (!result.success) {
 - Returns: `{ success, accountId, data? }`
 - Errors: `E_TX_PREPARE_FAILED` if selection or preparation fails
 
-### 4) sendContractTxRaw: build and sign contract method
+### 4.sendContractTxRaw: build and sign contract method
 
 ```javascript
 const contractTx = await provider.sendContractTxRaw({
@@ -155,7 +155,7 @@ const { txRaw } = contractTx.data;
 - Returns: `{ success, data: { txRaw }, error? }`
 - Errors: `E_SIGN_DENIED` when user rejects signature or signing fails
 
-### 5) sendBroadcastTx: broadcast the signed transaction
+### 5.sendBroadcastTx: broadcast the signed transaction
 
 ```javascript
 const broadcast = await provider.sendBroadcastTx({ txRaw });
@@ -170,7 +170,7 @@ const { hash } = broadcast.data;
 - Returns: `{ success, data: { hash }, error? }`
 - Errors: `E_BROADCAST_FAILED` when network submission fails
 
-### 6) sendBroadcastHash: track transaction status
+### 6.sendBroadcastHash: track transaction status
 
 ```javascript
 const status = await provider.sendBroadcastHash({ hash });

@@ -61,7 +61,7 @@ graph TD
 
 ## 實作步驟詳解
 
-### 1) 初始化 BrowserProvider
+### 1.初始化 BrowserProvider
 
 ```javascript
 import * as miniProgramApi from 'mini-program-api'
@@ -82,7 +82,7 @@ initProvider();
 - 返回：`BrowserProvider` 實例
 - 錯誤：當無法取得錢包時回傳 `E_PROVIDER_NOT_FOUND`
 
-### 2) requestAuth：取得授權
+### 2.requestAuth：取得授權
 
 ```javascript
 const authResult = await provider.requestAuth({
@@ -102,7 +102,7 @@ const { accountId } = authResult;
 - 返回：`{ success, accountId, data?, error? }`
 - 錯誤：使用者拒絕或授權失敗時 `E_AUTH_REJECTED`
 
-### 3) sendTransaction：選擇帳號
+### 3.sendTransaction：選擇帳號
 
 ```javascript
 // 設定 open_account_list: true 以拉起帳號選擇介面
@@ -126,7 +126,7 @@ if (!result.success) {
 - 返回：`{ success, accountId, data? }`
 - 錯誤：選擇或準備失敗時 `E_TX_PREPARE_FAILED`
 
-### 4) sendContractTxRaw：構造並簽署合約方法
+### 4.sendContractTxRaw：構造並簽署合約方法
 
 ```javascript
 const contractTx = await provider.sendContractTxRaw({
@@ -154,7 +154,7 @@ const { txRaw } = contractTx.data;
 - 返回：`{ success, data: { txRaw }, error? }`
 - 錯誤：使用者拒絕或簽名失敗時 `E_SIGN_DENIED`
 
-### 5) sendBroadcastTx：廣播簽名交易
+### 5.sendBroadcastTx：廣播簽名交易
 
 ```javascript
 const broadcast = await provider.sendBroadcastTx({ txRaw });
