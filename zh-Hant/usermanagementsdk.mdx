@@ -44,11 +44,14 @@ const authorizationMethod = async () => {
 permissions Array - 權限陣列，包含以下屬性:  
 - type string - 權限類型  
 - scope string 可選 - 權限範圍  
-
+- actions  object 可選 - API API 能力授權 
+    - clientID  string 可選 - 授權 code 碼
+    
 #### 返回值  
 返回一個Promise，解析為包含以下屬性的物件:  
 - success boolean - 授權是否成功  
 - accountId string - 帳戶ID  
+- clientID？ string - code 碼  
 - data Array - 獲得的授權資訊:(如果有)  
   type: string - 權限類型  
   scope: string - 權限範圍  

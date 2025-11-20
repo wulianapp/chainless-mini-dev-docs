@@ -34,7 +34,8 @@
               "zh-Hant/usermanagementsdk",
               "zh-Hant/trademanagementsdk",
               "zh-Hant/systemmanagementsdk",
-              "zh-Hant/start"
+              "zh-Hant/start",
+              "zh-Hant/downloaddevtools"
             ]
           },
           {
@@ -64,6 +65,7 @@
             "group": "Mini-Program SDK",
             "pages": [
               "en/quickinstallsdk",
+              "en/downloaddevtools",
               "en/usermanagementsdk",
               "en/trademanagementsdk",
               "en/systemmanagementsdk",
