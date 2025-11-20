@@ -45,11 +45,14 @@ const authorizationMethod = async () => {
 permissions Array - Array of permissions, containing the following properties:  
 - type string - Type of permission  
 - scope string (optional) - Scope of permission  
+- actions  object (optional) - API capability authorization
+    - clientID  string  (optional) - authorization code
 
 #### Return Value  
 Returns a Promise that resolves to an object with the following properties:  
 - success boolean - Whether the authorization was successful  
 - accountId string - Account ID  
+- clientID？ string - code 
 - data Array - Authorized information obtained (if any):  
   type: string - Type of permission  
   scope: string - Scope of permission  
