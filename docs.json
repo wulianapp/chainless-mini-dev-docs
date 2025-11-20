@@ -65,11 +65,11 @@
             "group": "Mini-Program SDK",
             "pages": [
               "en/quickinstallsdk",
-              "en/downloaddevtools",
               "en/usermanagementsdk",
               "en/trademanagementsdk",
               "en/systemmanagementsdk",
-              "en/start"
+              "en/start",
+              "en/downloaddevtools"
             ]
           },
           {
